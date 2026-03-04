@@ -1,90 +1,114 @@
-# AI Movie Insight Builder
+AI Movie Insight Builder
 
-A full-stack application that allows users to enter an IMDb movie ID and retrieve:
+A full-stack web application that allows users to enter an IMDb movie ID and retrieve detailed movie insights along with AI-generated audience sentiment analysis.
 
-- Movie metadata (title, poster, release year, rating)
-- Cast information
-- Plot summary
-- AI-generated audience sentiment summary
-- Overall sentiment classification (Positive / Mixed / Negative)
+The application aggregates data from multiple external APIs and uses AI to summarize audience reviews and classify overall sentiment.
 
-## 🔹 Tech Stack
+Live Demo
 
-### Frontend
+Deployed on Vercel:
 
-- Next.js (App Router)
-- TypeScript
-- Tailwind CSS
+https://ai-movie-insight-builder-gamma.vercel.app/
 
-### Backend
+Features
 
-- Next.js API Routes (Server-side logic)
-- Axios for external API calls
+Fetch movie details using IMDb ID
 
-### External APIs
+Display movie metadata:
 
-- OMDb API (Movie metadata)
-- TMDB API (Audience reviews)
-- Google Gemini API (AI sentiment analysis)
+Title
 
-### Testing
+Poster
 
-- Jest
-- React Testing Library
+Release year
 
----
+IMDb rating
 
-## 🔹 Architecture Overview
+Cast list
 
-The application follows a modular full-stack architecture:
+Plot summary
+
+Retrieve audience reviews from TMDB
+
+Generate AI-based sentiment summary
+
+Classify audience sentiment:
+
+Positive
+
+Mixed
+
+Negative
+
+Responsive design for desktop and mobile
+
+Graceful error handling
+
+Loading skeletons and improved UX
+
+Unit tests for core logic
+
+Tech Stack
+
+Frontend
+
+Next.js (App Router)
+
+TypeScript
+
+Tailwind CSS
+
+Backend
+
+Next.js API Routes
+
+Axios / Fetch for external API requests
+
+External APIs
+
+OMDb API – Movie metadata
+
+TMDB API – Audience reviews
+
+Google Gemini API – AI sentiment summarization
+
+Testing
+
+Jest
+
+React Testing Library
+
+Architecture Overview
+
+The project follows a modular layered architecture:
 
 Client (React UI)
 ↓
 API Route (/api/movie/[id])
 ↓
-Services Layer (lib/)
+Service Layer (lib/)
 ├── omdb.ts
 ├── tmdb.ts
 ├── ai.ts
-├── validation.ts
+└── validation.ts
 ↓
 External APIs
 
-### Key Design Decisions
+Key Design Decisions
 
-- Separation of concerns between API route and service layer.
-- In-memory caching implemented for TMDB reviews to reduce redundant calls.
-- AI logic abstracted in `lib/ai.ts` to allow easy switching between providers.
-- Input validation using Zod schema.
-- Graceful error handling for all external API failures.
+Separation of concerns between UI, API routes, and service logic.
 
----
+Service layer abstraction for external APIs.
 
-## 🔹 Features Implemented
+Input validation using Zod schemas.
 
-- IMDb ID validation
-- Fetch movie details from OMDb
-- Fetch audience reviews from TMDB
-- AI-generated audience sentiment summary
-- Sentiment classification (Positive / Mixed / Negative)
-- Responsive UI (Desktop + Mobile)
-- Error handling & loading states
-- Basic unit testing
+Graceful fallback handling when external APIs fail.
 
-## 🔹 Running Tests
+Caching strategy implemented to reduce redundant API requests.
 
-npm test
+AI module abstraction allows switching between AI providers easily.
 
-Test coverage includes:
-
-- IMDb validation
-- Sentiment extraction logic
-- API route logic (mocked dependencies)
-- Core UI component rendering
-
----
-
-## 🔹 Deployment
+Deployment
 
 The application is deployed on Vercel.
 
@@ -92,48 +116,39 @@ Environment variables must be configured in:
 
 Vercel Dashboard → Project Settings → Environment Variables
 
----
+After configuration, Vercel automatically builds and deploys the application.
 
-## 🔹 Assumptions
+Assumptions
 
-- IMDb ID follows format: `tt` + 7–8 digits.
-- TMDB reviews may not always exist for all movies.
-- AI summary is generated based on top 5 reviews to control token usage.
-- Sentiment classification is derived from AI response.
+IMDb ID format: tt followed by 7–8 digits.
 
----
+Not all movies have audience reviews available.
 
-## 🔹 Performance Considerations
+AI summarization is performed using the top 5 reviews to reduce token usage.
 
-- In-memory caching reduces redundant TMDB API calls.
-- Review length truncated before sending to AI to minimize cost.
-- Graceful fallback when external APIs fail.
+Sentiment classification is derived from AI output.
 
----
+Performance Considerations
 
-## 🔹 Future Improvements
+Review requests are cached to avoid redundant API calls.
 
-- Add persistent caching (Redis).
-- Add review pagination.
-- Improve AI prompt engineering for structured JSON output.
-- Add E2E testing (Playwright).
-- Add loading skeleton animations.
+Review text length is limited before sending to the AI model.
 
----
+External API failures are handled gracefully to prevent UI crashes.
 
-## 🔹 Tech Stack Rationale
+Future Improvements
 
-- **Next.js** provides seamless full-stack capabilities with API routes.
-- **TypeScript** ensures type safety and maintainability.
-- **Zod** used for runtime validation.
-- **Gemini API** used for AI summarization with free-tier compatibility.
-- **Jest + React Testing Library** chosen for lightweight unit testing.
+Redis caching for API responses
 
-The stack aligns with scalable modern web development practices.
+Review pagination
 
----
+Improved AI prompt engineering
 
-## 🔹 Author
+End-to-end testing with Playwright
 
-Madhur Gupta  
+Advanced UI animations and micro-interactions
+
+Author
+
+Madhur Gupta
 Full Stack Developer Intern Candidate
