@@ -11,9 +11,10 @@ export async function GET(
   try {
     const { id } = await context.params;
 
+    // Validate IMDb ID
     imdbSchema.parse(id);
 
-    // Fetch movie
+    // Fetch movie details
     const movieData = await fetchMovieDetails(id);
 
     // Normalize OMDb response
@@ -32,18 +33,28 @@ export async function GET(
     const reviews = await fetchMovieReviews(id);
 
     let aiSummary = "No reviews available.";
+    let sentiment: "Positive" | "Mixed" | "Negative" = "Mixed";
 
     if (reviews.length > 0) {
       const aiResult = await analyzeReviews(reviews);
-      aiSummary = aiResult ?? "Unable to analyze sentiment.";
+
+      if (aiResult) {
+        aiSummary = aiResult.summary;
+        sentiment = aiResult.sentiment;
+      }
     }
 
     return NextResponse.json({
       movie,
       aiSummary,
+      sentiment,
     });
   } catch (error: any) {
     console.error("API ERROR:", error);
-    return NextResponse.json({ error: error.message }, { status: 400 });
+
+    return NextResponse.json(
+      { error: error.message || "Internal Server Error" },
+      { status: 400 },
+    );
   }
 }
